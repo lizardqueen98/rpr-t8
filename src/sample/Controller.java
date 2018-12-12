@@ -23,9 +23,11 @@ public class Controller {
     private ListaFajlovaModel model;
 
     public void trazi(ActionEvent actionEvent) {
-        model = new ListaFajlovaModel();
-        model.napuni(rijec.getText(),"C:\\Users\\Nadija");
+        model = new ListaFajlovaModel(rijec.getText());
         lista.setItems(model.getFajlovi());
+        new Thread(()->{
+            Platform.runLater(model);
+        }).start();
     }
 
     public void prekini(ActionEvent actionEvent) {
