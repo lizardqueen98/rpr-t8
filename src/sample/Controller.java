@@ -15,19 +15,28 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable{
     public TextField rijec;
     public ListView lista;
     public Button trazi;
     public Button prekini;
     private ListaFajlovaModel model;
+    private ObservableList<File> fajlovi = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        lista.setItems(fajlovi);
+    }
+
+    public ObservableList<File> getFajlovi(){
+        return fajlovi;
+    }
 
     public void trazi(ActionEvent actionEvent) {
-        model = new ListaFajlovaModel(rijec.getText());
-        lista.setItems(model.getFajlovi());
-        new Thread(()->{
-            Platform.runLater(model);
-        }).start();
+        model = new ListaFajlovaModel(this);
+        model.setTrazena(rijec.getText());
+        Thread thr = new Thread(model);
+        thr.start();
     }
 
     public void prekini(ActionEvent actionEvent) {
