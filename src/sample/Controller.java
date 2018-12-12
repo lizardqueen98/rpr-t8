@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +19,15 @@ public class Controller {
     public TextField rijec;
     public ListView lista;
     public Button trazi;
+    public Button prekini;
     private ListaFajlovaModel model;
-    /*public Controller(ListaFajlovaModel model){
-        this.model = model;
-    }*/
+
     public void trazi(ActionEvent actionEvent) {
         model = new ListaFajlovaModel();
         model.napuni(rijec.getText(),"C:\\Users\\Nadija");
         lista.setItems(model.getFajlovi());
     }
 
+    public void prekini(ActionEvent actionEvent) {
+    }
 }

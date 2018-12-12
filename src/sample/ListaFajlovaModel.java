@@ -11,7 +11,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ListaFajlovaModel {
+public class ListaFajlovaModel{
 
     private ObservableList<File> fajlovi = FXCollections.observableArrayList();
     private ObjectProperty<File> trenutniFajl = new SimpleObjectProperty<>();
@@ -42,4 +42,5 @@ public class ListaFajlovaModel {
             //System.out.println(e.getCause());
         }
     }
+
 }
