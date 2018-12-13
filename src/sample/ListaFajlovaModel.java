@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class ListaFajlovaModel implements Runnable{
 
     private SimpleStringProperty trazena = new SimpleStringProperty();
-    public static String put = "C:\\Users\\Nadija";
+    public static String put = new File(System.getProperty("user.home")).getAbsolutePath();
     public Controller cont;
     private boolean pretragaUToku = true;
 
@@ -38,21 +38,21 @@ public class ListaFajlovaModel implements Runnable{
             return;
         }
         try {
-            File file = new File(put); //"C:\\Users\\Nadija"
+            File file = new File(put);
             File[] putevi = file.listFiles();
             for (File f : putevi) {
                 if (f.isFile() && f.getAbsolutePath().contains(getTrazena())) {
                     Platform.runLater(()->{
                         cont.getFajlovi().add(f);
                     });
-                    System.out.println(f.getAbsolutePath());
+                    //System.out.println(f.getAbsolutePath());
                 } else if (f.isDirectory()){
                     put = f.getAbsolutePath();
                     run();
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getCause());
+            //System.out.println(e.getCause());
         }
     }
     public void stop(){
