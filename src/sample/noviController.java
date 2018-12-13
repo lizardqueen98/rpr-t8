@@ -61,6 +61,20 @@ public class noviController implements Initializable{
                 }
             }
         });
+        broj.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean o, Boolean n) {
+                if(!n){
+                    if (validanBroj(broj.getText())) {
+                        adresa.getStyleClass().removeAll("poljeNijeIspravno");
+                        adresa.getStyleClass().add("poljeIspravno");
+                    } else {
+                        adresa.getStyleClass().removeAll("poljeIspravno");
+                        adresa.getStyleClass().add("poljeNijeIspravno");
+                    }
+                }
+            }
+        });
     }
     private boolean validnaAdresa(String novo) {
         if(novo.length()==0)
@@ -87,5 +101,8 @@ public class noviController implements Initializable{
                 return false;
         }
         return true;
+    }
+    public boolean validanBroj(String novi_broj){
+
     }
 }
