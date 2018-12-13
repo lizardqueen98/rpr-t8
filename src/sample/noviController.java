@@ -118,16 +118,14 @@ public class noviController implements Initializable{
     public boolean validanBroj(String novi_broj){
         String adresa = "http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=";
         String validan =  null;
-        Platform.runLater(()->{
             try{
                 URL url = new URL(adresa+novi_broj);
                 BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
-                //String validan = ulaz.readLine();
+                validan = ulaz.readLine();
                 //System.out.println(validan);
             }catch(Exception e){
                 System.out.println("Nesto ne valja.");
             }
-        });
         if(validan.equals("OK")) return true;
         return false;
     }
