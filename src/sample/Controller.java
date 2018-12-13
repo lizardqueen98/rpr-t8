@@ -26,6 +26,7 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lista.setItems(fajlovi);
+        prekini.setDisable(true);
     }
 
     public ObservableList<File> getFajlovi(){
@@ -33,12 +34,19 @@ public class Controller implements Initializable{
     }
 
     public void trazi(ActionEvent actionEvent) {
+        trazi.setDisable(true);
+        prekini.setDisable(false);
+        fajlovi.removeAll();
         model = new ListaFajlovaModel(this);
         model.setTrazena(rijec.getText());
+        model.setPretraga(true);
         Thread thr = new Thread(model);
         thr.start();
     }
 
     public void prekini(ActionEvent actionEvent) {
+        prekini.setDisable(true);
+        trazi.setDisable(false);
+        model.stop();
     }
 }

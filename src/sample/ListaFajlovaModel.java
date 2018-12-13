@@ -17,6 +17,11 @@ public class ListaFajlovaModel implements Runnable{
     private SimpleStringProperty trazena = new SimpleStringProperty();
     public static String put = "C:\\Users\\Nadija";
     public Controller cont;
+    private boolean pretragaUToku = true;
+
+    public void setPretraga(Boolean b){
+        pretragaUToku = b;
+    }
 
     public ListaFajlovaModel(Controller c){
         cont=c;
@@ -29,6 +34,9 @@ public class ListaFajlovaModel implements Runnable{
     }
     @Override
     public void run() {
+        if(!pretragaUToku){
+            return;
+        }
         try {
             File file = new File(put); //"C:\\Users\\Nadija"
             File[] putevi = file.listFiles();
@@ -46,5 +54,8 @@ public class ListaFajlovaModel implements Runnable{
         } catch (Exception e) {
             System.out.println(e.getCause());
         }
+    }
+    public void stop(){
+        pretragaUToku = false;
     }
 }
