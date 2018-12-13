@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class ListaFajlovaModel implements Runnable{
 
     private SimpleStringProperty trazena = new SimpleStringProperty();
-    public static String put = new File(System.getProperty("user.home")).getAbsolutePath();
+    public String put = new File(System.getProperty("user.home")).getAbsolutePath();
     public Controller cont;
     private boolean pretragaUToku = true;
 
@@ -34,6 +34,12 @@ public class ListaFajlovaModel implements Runnable{
     }
     @Override
     public void run() {
+        trf();
+    }
+    public void stop(){
+        pretragaUToku = false;
+    }
+    public void trf(){
         if(!pretragaUToku){
             return;
         }
@@ -48,14 +54,11 @@ public class ListaFajlovaModel implements Runnable{
                     //System.out.println(f.getAbsolutePath());
                 } else if (f.isDirectory()){
                     put = f.getAbsolutePath();
-                    run();
+                    trf();
                 }
             }
         } catch (Exception e) {
             //System.out.println(e.getCause());
         }
-    }
-    public void stop(){
-        pretragaUToku = false;
     }
 }

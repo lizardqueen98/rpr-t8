@@ -30,7 +30,7 @@ public class noviController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         grad.getItems().addAll("Sarajevo", "Mostar", "Zenica", "Foca", "Tuzla", "Doboj");
-        new Thread(()-> {
+        //new Thread(()-> {
             ime.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> obs, Boolean o, Boolean n) {
@@ -77,17 +77,12 @@ public class noviController implements Initializable{
                     @Override
                     public void changed(ObservableValue<? extends Boolean> obs, Boolean o, Boolean n) {
                         if (!n) {
-                            if (validanBroj(broj.getText())) {
-                                broj.getStyleClass().removeAll("poljeNijeIspravno");
-                                broj.getStyleClass().add("poljeIspravno");
-                            } else {
-                                broj.getStyleClass().removeAll("poljeIspravno");
-                                broj.getStyleClass().add("poljeNijeIspravno");
-                            }
+                            Thread t = new Thread(() -> { validanBroj(); });
+                            t.start();
                         }
                     }
+
                 });
-        }).start();
     }
     private boolean validnaAdresa(String novo) {
         if(novo.length()==0)
@@ -115,7 +110,8 @@ public class noviController implements Initializable{
         }
         return true;
     }
-    public boolean validanBroj(String novi_broj){
+    private void validanBroj(){
+        String novi_broj = broj.getText();
         String adresa = "http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=";
         String validan =  null;
             try{
@@ -126,8 +122,18 @@ public class noviController implements Initializable{
             }catch(Exception e){
                 System.out.println("Nesto ne valja.");
             }
-        if(validan.equals("OK")) return true;
-        return false;
+        if(validan.equals("OK")) {
+            Platform.runLater( () -> {
+                broj.getStyleClass().removeAll("poljeNijeIspravno");
+                broj.getStyleClass().add("poljeIspravno");
+            });
+        } else {
+            Platform.runLater( () -> {
+                broj.getStyleClass().removeAll("poljeIspravno");
+                broj.getStyleClass().add("poljeNijeIspravno");
+            });
+        }
+
     }
     private void upozorenje(ActionEvent actionEvent)
     {

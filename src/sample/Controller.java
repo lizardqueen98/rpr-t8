@@ -60,6 +60,7 @@ public class Controller implements Initializable{
         trazi.setDisable(true);
         prekini.setDisable(false);
         fajlovi.removeAll();
+        lista.getItems().clear();
         model = new ListaFajlovaModel(this);
         model.setTrazena(rijec.getText());
         model.setPretraga(true);
