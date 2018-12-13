@@ -6,7 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class noviController implements Initializable{
@@ -103,6 +107,15 @@ public class noviController implements Initializable{
         return true;
     }
     public boolean validanBroj(String novi_broj){
-
+        String adresa = "http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=";
+        try{
+            URL url = new URL(adresa+novi_broj);
+            BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+            String validan = ulaz.readLine();
+            if(validan.equals("OK")) return true;
+        }catch(Exception e){
+            System.out.println("Nesto ne valja.")
+        }
+        return false;
     }
 }
